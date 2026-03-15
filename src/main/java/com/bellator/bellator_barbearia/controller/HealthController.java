@@ -1,4 +1,4 @@
-package com.taylortech.bellator.controller;
+package com.bellator.bellator_barbearia.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

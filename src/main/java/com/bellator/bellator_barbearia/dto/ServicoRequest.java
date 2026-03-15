@@ -1,4 +1,4 @@
-package com.taylortech.bellator.dto;
+package com.bellator.bellator_barbearia.dto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

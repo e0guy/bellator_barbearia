@@ -1,4 +1,4 @@
-package com.taylortech.bellator.controller;
+package com.bellator.bellator_barbearia.controller;
 
 import com.taylortech.bellator.dto.AgendamentoCreateRequest;
 import com.taylortech.bellator.dto.AgendamentoResponse;

@@ -1,4 +1,4 @@
-package com.taylortech.bellator.security;
+package com.bellator.bellator_barbearia.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

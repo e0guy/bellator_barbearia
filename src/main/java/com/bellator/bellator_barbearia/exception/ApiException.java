@@ -1,4 +1,4 @@
-package com.taylortech.bellator.exception;
+package com.bellator.bellator_barbearia.exception;
 
 import org.springframework.http.HttpStatus;
 

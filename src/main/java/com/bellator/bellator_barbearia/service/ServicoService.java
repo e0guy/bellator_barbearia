@@ -1,4 +1,4 @@
-package com.taylortech.bellator.service;
+package com.bellator.bellator_barbearia.service;
 
 import com.taylortech.bellator.dto.ServicoRequest;
 import com.taylortech.bellator.exception.ApiException;

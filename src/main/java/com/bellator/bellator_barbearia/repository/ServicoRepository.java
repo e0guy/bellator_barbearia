@@ -1,4 +1,4 @@
-package com.taylortech.bellator.repository;
+package com.bellator.bellator_barbearia.repository;
 
 import com.taylortech.bellator.model.Servico;
 import org.springframework.data.jpa.repository.JpaRepository;

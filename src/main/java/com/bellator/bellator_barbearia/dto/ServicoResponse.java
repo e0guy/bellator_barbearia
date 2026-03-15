@@ -1,4 +1,4 @@
-package com.taylortech.bellator.dto;
+package com.bellator.bellator_barbearia.dto;
 
 public class ServicoResponse {
     public Long id;

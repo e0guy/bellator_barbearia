@@ -1,4 +1,4 @@
-package com.taylortech.bellator.security;
+package com.bellator.bellator_barbearia.security;
 
 import com.taylortech.bellator.model.Usuario;
 import com.taylortech.bellator.repository.UsuarioRepository;

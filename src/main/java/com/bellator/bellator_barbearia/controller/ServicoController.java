@@ -1,4 +1,4 @@
-package com.taylortech.bellator.controller;
+package com.bellator.bellator_barbearia.controller;
 
 import com.taylortech.bellator.dto.ServicoRequest;
 import com.taylortech.bellator.dto.ServicoResponse;

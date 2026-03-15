@@ -1,4 +1,4 @@
-package com.taylortech.bellator.config;
+package com.bellator.bellator_barbearia.config;
 
 import com.taylortech.bellator.model.Role;
 import com.taylortech.bellator.model.Servico;

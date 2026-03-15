@@ -1,4 +1,4 @@
-package com.taylortech.bellator.model;
+package com.bellator.bellator_barbearia.model;
 
 public enum Role {
     CLIENTE,

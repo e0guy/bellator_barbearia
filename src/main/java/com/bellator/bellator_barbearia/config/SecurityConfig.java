@@ -1,4 +1,4 @@
-package com.taylortech.bellator.config;
+package com.bellator.bellator_barbearia.config;
 
 import com.taylortech.bellator.security.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
