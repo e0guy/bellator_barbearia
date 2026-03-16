@@ -45,7 +45,15 @@ public class JwtService {
         return generate(subject, Map.of());
     }
     public boolean isTokenValid(String token) {
-        return !getSubject(token).getExpiration().before(new Date());
+        return !getClaims(token).getExpiration().before(new Date());
+    }
+    private Claims getClaims(String token) {
+
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     public String getSubject(String token) {
