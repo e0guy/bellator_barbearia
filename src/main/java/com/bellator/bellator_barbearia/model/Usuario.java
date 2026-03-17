@@ -1,5 +1,6 @@
 package com.bellator.bellator_barbearia.model;
 
+import com.bellator.bellator_barbearia.role.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -16,14 +17,11 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     private String nome;
 
-    @Email
-    @NotBlank
+    @Column(unique = true)
     private String email;
-
-    @NotBlank
+    private String telefone;
     private String senhaHash;
 
     @Enumerated(EnumType.STRING)

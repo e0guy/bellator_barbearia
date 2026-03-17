@@ -1,9 +1,12 @@
 package com.bellator.bellator_barbearia.dto;
 
-import com.bellator.bellator_barbearia.model.StatusAgendamento;
+import com.bellator.bellator_barbearia.role.StatusAgendamento;
+import lombok.Data;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+@Data
 public class AgendamentoResponse {
     public Long id;
     public String clienteNome;

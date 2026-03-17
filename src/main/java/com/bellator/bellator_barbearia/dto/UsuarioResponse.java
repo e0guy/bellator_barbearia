@@ -1,7 +1,9 @@
 package com.bellator.bellator_barbearia.dto;
 
-import com.bellator.bellator_barbearia.model.Role;
+import com.bellator.bellator_barbearia.role.Role;
+import lombok.Data;
 
+@Data
 public class UsuarioResponse {
     public Long id;
     public String nome;

@@ -1,7 +1,7 @@
 package com.bellator.bellator_barbearia.repository;
 
 import com.bellator.bellator_barbearia.model.Agendamento;
-import com.bellator.bellator_barbearia.model.StatusAgendamento;
+import com.bellator.bellator_barbearia.role.StatusAgendamento;
 import com.bellator.bellator_barbearia.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 

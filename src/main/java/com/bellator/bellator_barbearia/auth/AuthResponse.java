@@ -1,7 +1,7 @@
 package com.bellator.bellator_barbearia.auth;
 
 import com.bellator.bellator_barbearia.dto.UsuarioResponse;
-import com.bellator.bellator_barbearia.model.Role;
+import com.bellator.bellator_barbearia.role.Role;
 
 public class AuthResponse {
 

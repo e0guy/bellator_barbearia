@@ -1,6 +1,6 @@
 package com.bellator.bellator_barbearia.repository;
 
-import com.bellator.bellator_barbearia.model.Role;
+import com.bellator.bellator_barbearia.role.Role;
 import com.bellator.bellator_barbearia.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 

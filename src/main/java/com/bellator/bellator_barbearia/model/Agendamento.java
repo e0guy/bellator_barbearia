@@ -1,5 +1,6 @@
 package com.bellator.bellator_barbearia.model;
 
+import com.bellator.bellator_barbearia.role.StatusAgendamento;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

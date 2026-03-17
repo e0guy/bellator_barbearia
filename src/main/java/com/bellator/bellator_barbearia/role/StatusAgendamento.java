@@ -1,4 +1,4 @@
-package com.bellator.bellator_barbearia.model;
+package com.bellator.bellator_barbearia.role;
 
 public enum StatusAgendamento {
     AGENDADO,

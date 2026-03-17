@@ -1,5 +1,8 @@
 package com.bellator.bellator_barbearia.dto;
 
+import lombok.Data;
+
+@Data
 public class RelatorioResponse {
     public long totalAgendamentos;
     public long concluidos;

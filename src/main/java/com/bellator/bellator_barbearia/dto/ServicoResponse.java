@@ -1,5 +1,8 @@
 package com.bellator.bellator_barbearia.dto;
 
+import lombok.Data;
+
+@Data
 public class ServicoResponse {
     public Long id;
     public String nome;

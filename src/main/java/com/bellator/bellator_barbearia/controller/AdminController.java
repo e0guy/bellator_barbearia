@@ -2,7 +2,7 @@ package com.bellator.bellator_barbearia.controller;
 
 import com.bellator.bellator_barbearia.dto.RelatorioResponse;
 import com.bellator.bellator_barbearia.model.Agendamento;
-import com.bellator.bellator_barbearia.model.StatusAgendamento;
+import com.bellator.bellator_barbearia.role.StatusAgendamento;
 import com.bellator.bellator_barbearia.service.AgendamentoService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

@@ -1,6 +1,6 @@
 package com.bellator.bellator_barbearia.config;
 
-import com.bellator.bellator_barbearia.model.Role;
+import com.bellator.bellator_barbearia.role.Role;
 import com.bellator.bellator_barbearia.model.Servico;
 import com.bellator.bellator_barbearia.model.Usuario;
 import com.bellator.bellator_barbearia.repository.ServicoRepository;

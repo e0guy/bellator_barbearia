@@ -1,7 +1,7 @@
 package com.bellator.bellator_barbearia.service;
 
 import com.bellator.bellator_barbearia.exception.ApiException;
-import com.bellator.bellator_barbearia.model.Role;
+import com.bellator.bellator_barbearia.role.Role;
 import com.bellator.bellator_barbearia.model.Usuario;
 import com.bellator.bellator_barbearia.repository.UsuarioRepository;
 import org.springframework.http.HttpStatus;

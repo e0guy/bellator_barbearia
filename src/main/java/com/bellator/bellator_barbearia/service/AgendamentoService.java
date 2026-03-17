@@ -3,7 +3,7 @@ package com.bellator.bellator_barbearia.service;
 import com.bellator.bellator_barbearia.dto.AgendamentoCreateRequest;
 import com.bellator.bellator_barbearia.exception.ApiException;
 import com.bellator.bellator_barbearia.model.Agendamento;
-import com.bellator.bellator_barbearia.model.StatusAgendamento;
+import com.bellator.bellator_barbearia.role.StatusAgendamento;
 import com.bellator.bellator_barbearia.model.Usuario;
 import com.bellator.bellator_barbearia.repository.AgendamentoRepository;
 import org.springframework.http.HttpStatus;
