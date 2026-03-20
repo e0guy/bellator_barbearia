@@ -15,6 +15,12 @@ import java.util.List;
 @RequestMapping("/agendamentos")
 public class AgendamentoController {
 
+    private final AgendamentoService service;
+
+    public AgendamentoController(AgendamentoService service) {
+        this.service = service;
+    }
+
     @PostMapping
     public AgendamentoResponse criar(Authentication auth, @RequestBody AgendamentoCreateRequest req) {
         Agendamentos a = service.criar(auth.getName(), req);
@@ -32,5 +38,17 @@ public class AgendamentoController {
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
         return toResp(service.cancelar(id, auth.getName(), isAdmin));
     }
+    private AgendamentoResponse toResp(Agendamentos a) {
+        return new AgendamentoResponse(
+                a.getId(),
+                a.getCliente().getNome(),
+                a.getBarbeiro().getNome(),
+                a.getServicos().getNome(),
+                a.getServicos().getPreco(),
+                a.getData(),
+                a.getHorario(),
+                a.getStatus()
+        );
+    }
 }
-}
+
