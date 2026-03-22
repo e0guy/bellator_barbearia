@@ -1,14 +1,20 @@
 import * as api from "../api.js";
-import { el, money, mountReveal } from "../ui.js";
+import { el, money, mountReveal, toast } from "../ui.js";
 
-export function BookServicePage(ctx){
+export async function BookServicePage(ctx){
   const wrap = el("div", {});
   wrap.append(
     el("h1",{class:"h1 reveal"},"Escolha o Serviço"),
     el("p",{class:"sub reveal"},"Selecione o que deseja fazer")
   );
 
-  const services = api.listServices();
+  let services = [];
+  try {
+    services = await api.listServices();
+  } catch (e) {
+    toast(e.message || "Erro ao carregar serviços");
+  }
+
   const list = el("div",{class:"section"});
   wrap.append(list);
 
@@ -16,6 +22,19 @@ export function BookServicePage(ctx){
 
   function render(){
     list.innerHTML = "";
+    if (services.length === 0) {
+      list.append(
+        el("div", { class: "card reveal" }, [
+          el("div", { class: "card__title" }, "Nenhum serviço disponível"),
+          el(
+            "div",
+            { class: "card__desc" },
+            "Cadastre serviços no painel admin ou reinicie o servidor para carregar os dados iniciais."
+          )
+        ])
+      );
+      return;
+    }
     for(const s of services){
       const card = el("button",{class:`card reveal ${selected?.id===s.id ? "card--selected":""}`, type:"button", style:"text-align:left; width:100%; cursor:pointer"});
       card.append(
@@ -30,7 +49,7 @@ export function BookServicePage(ctx){
           s.tag ? el("span",{class:"badge"}, s.tag) : el("span",{})
         ]),
         el("div",{style:"margin-top:10px; display:flex; justify-content:space-between; gap:10px"}, [
-          el("div",{class:"helper"}, `${s.duracaoMin} min`),
+          el("div",{class:"helper"}, `${s.duracaoMinutos || s.duracaoMin} min`),
           el("div",{style:"font-weight:700"}, fmtMoney(s.preco))
         ])
       );

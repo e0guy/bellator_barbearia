@@ -25,9 +25,6 @@ export function AppointmentsPage(ctx){
   async function render(){
     list.innerHTML = "";
     await api.refreshAppointmentsForUser(user);
-    const db = api.ensureDB();
-    const services = Object.fromEntries(db.services.map(s=>[s.id,s]));
-    const barbers = Object.fromEntries(db.barbers.map(b=>[b.id,b]));
     const appts = api.listAppointmentsForUser(user);
 
     if(appts.length === 0){
@@ -40,8 +37,6 @@ export function AppointmentsPage(ctx){
     }
 
     for(const a of appts){
-      const s = services[a.servicoId];
-      const b = barbers[a.barbeiroId];
       const status = a.status;
       const isCanceled = status==="Cancelado";
       const isDone = status==="Concluído";
@@ -50,8 +45,8 @@ export function AppointmentsPage(ctx){
       c.append(
         el("div",{class:"card__row"}, [
           el("div",{}, [
-            el("div",{class:"card__title"}, s?.nome || "Serviço"),
-            el("div",{class:"card__desc"}, `${b?.nome || "Barbeiro"} • ${fmtDateTime(a.dataHora)}`)
+            el("div",{class:"card__title"}, a.servicoNome || "Serviço"),
+            el("div",{class:"card__desc"}, `${a.barbeiroNome || "Barbeiro"}${a.clienteNome && user.role !== "cliente" ? ` • ${a.clienteNome}` : ""} • ${fmtDateTime(a.dataHora)}`)
           ]),
           el("span",{class:"badge"}, status)
         ])
@@ -86,7 +81,7 @@ export function AppointmentsPage(ctx){
         { label:"Voltar", variant:"btn--outline", onClick: async ()=>{} },
         { label:"Cancelar Agendamento", variant:"btn--danger", onClick: async ()=>{
             try{
-              api.cancelAppointment(id, user.id);
+              await api.cancelAppointment(id);
               toast("Agendamento cancelado.");
               render();
             }catch(e){

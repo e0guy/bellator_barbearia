@@ -32,6 +32,17 @@ public class AgendamentoController {
         return service.meus(auth.getName()).stream().map(this::toResp).toList();
     }
 
+    @GetMapping("/minha-agenda")
+    public List<AgendamentoResponse> minhaAgenda(Authentication auth, @RequestParam(required = false) LocalDate data) {
+        LocalDate dia = data != null ? data : LocalDate.now();
+        return service.agendaBarbeiro(auth.getName(), dia).stream().map(this::toResp).toList();
+    }
+
+    @PutMapping("/{id}/concluir")
+    public AgendamentoResponse concluir(Authentication auth, @PathVariable Long id) {
+        return toResp(service.concluir(id, auth.getName()));
+    }
+
     @PutMapping("/{id}/cancelar")
     public AgendamentoResponse cancelar(Authentication auth, @PathVariable Long id) {
         boolean isAdmin = auth.getAuthorities().stream()

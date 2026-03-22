@@ -35,13 +35,13 @@ public class ServicoController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ServicoResponse atualizar(@PathVariable Long id, @Valid @RequestBody ServicoRequest req) {
         Servicos s = service.atualizar(id, req);
         return new ServicoResponse(s.getId(), s.getNome(), s.getPreco(), s.getDuracaoMinutos());
     }
 
-    @DeleteMapping("/<built-in function id>")
+    @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public void deletar(@PathVariable Long id) {
         service.deletar(id);

@@ -41,12 +41,14 @@ function guard(path) {
   if (!route) return { redirect: "/home" };
 
   const me = api.me();
-  const isAuthed = !!me || isAuthenticated();
+  const hasToken = isAuthenticated();
 
   if (route.public) return { ok: true, me };
-  if (!isAuthed) return { redirect: "/auth" };
 
-  if (route.role && me?.user?.role !== route.role) {
+  if (!hasToken || !me) return { redirect: "/auth" };
+  if (!me.user) return { redirect: "/auth" };
+
+  if (route.role && me.user.role !== route.role) {
     return { redirect: "/home" };
   }
 
@@ -75,14 +77,14 @@ async function render() {
   }
 
   const me = g.me || api.me();
-  const navOn = !!route.nav && !!me;
+  const navOn = !!route.nav && !!me?.user;
 
   bottomNav.style.display = navOn ? "flex" : "none";
-  whatsBtn.style.display = me ? "grid" : "none";
+  whatsBtn.style.display = me?.user ? "grid" : "none";
 
   setTopbar({
     showBack: !route.nav && path !== "/auth" && path !== "/home",
-    showMenu: me && route.nav,
+    showMenu: me?.user && route.nav,
   });
 
   if (__isRendering) {
@@ -91,9 +93,9 @@ async function render() {
   }
   __isRendering = true;
 
-  const swap = () => {
+  const swap = async () => {
     view.innerHTML = "";
-    const pageNode = route.page({ ...ctx, ...(me || {}) });
+    const pageNode = await route.page({ ...ctx, ...(me || {}) });
     view.appendChild(pageNode);
 
     try {
@@ -133,7 +135,7 @@ window.addEventListener("load", async () => {
   const me = api.me();
 
   if (!location.hash) {
-    location.hash = me ? "#/home" : "#/auth";
+    location.hash = me?.user ? "#/home" : "#/auth";
   } else {
     render();
   }
@@ -145,7 +147,7 @@ backBtn.addEventListener("click", () => {
 
 menuBtn.addEventListener("click", () => {
   const me = api.me();
-  if (!me) return;
+  if (!me?.user) return;
   openMenu(me.user);
 });
 

@@ -2,7 +2,7 @@ import * as api from "../api.js";
 import { el, toast, mountReveal } from "../ui.js";
 import { BarberCard } from "../barber.js";
 
-export function BookBarberPage(ctx){
+export async function BookBarberPage(ctx){
   const wrap = el("div", {});
   const db = api.ensureDB();
   const services = Object.fromEntries(db.services.map(s=>[s.id,s]));
@@ -14,7 +14,13 @@ export function BookBarberPage(ctx){
     el("p",{class:"sub reveal"},"Selecione o profissional")
   );
 
-  const barbers = api.listBarbers();
+  let barbers = [];
+  try {
+    barbers = await api.listBarbers();
+  } catch (e) {
+    toast(e.message || "Erro ao carregar barbeiros");
+  }
+
   const list = el("div",{class:"section"});
   wrap.append(list);
 

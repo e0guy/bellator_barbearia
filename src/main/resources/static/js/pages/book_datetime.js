@@ -86,7 +86,13 @@ export function BookDateTimePage(ctx){
     const mm = String(selectedDate.getMonth()+1).padStart(2,"0");
     const dd = String(selectedDate.getDate()).padStart(2,"0");
     const dateStr = `${yyyy}-${mm}-${dd}`;
-    const busyTimes = await api.getBusyTimes(barber.id, dateStr);
+    let busyTimes = [];
+    try {
+      busyTimes = await api.getBusyTimes(barber.id, dateStr);
+    } catch (e) {
+      toast(e.message || "Não foi possível carregar os horários.");
+    }
+    if (!Array.isArray(busyTimes)) busyTimes = [];
     const slots = timeSlotsFor(selectedDate, busyTimes);
 
     timesWrap.append(

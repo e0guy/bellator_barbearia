@@ -5,9 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
@@ -15,7 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
 
 @Configuration
 @RequiredArgsConstructor
@@ -29,7 +31,9 @@ public class SecurityConfig {
 
         http
             .csrf(csrf -> csrf.disable())
+            .cors(Customizer.withDefaults())
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // 🔓 LIBERA FRONT (ESSENCIAL)
                 .requestMatchers(
                     "/",
@@ -50,6 +54,12 @@ public class SecurityConfig {
                 // 🔓 LIBERA LOGIN / H2
                 .requestMatchers("/auth/**", "/h2-console/**").permitAll()
 
+                // 🔓 LIBERA LISTAGENS PÚBLICAS (Serviços e Barbeiros)
+                .requestMatchers(HttpMethod.GET, "/servicos", "/usuarios/barbeiros").permitAll()
+
+                // 🔓 Horários ocupados na agenda (fluxo de agendamento no front)
+                .requestMatchers(HttpMethod.GET, "/agenda").permitAll()
+
                 // 🔒 RESTO PROTEGIDO
                 .anyRequest().authenticated()
             )
@@ -57,8 +67,8 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             );
 
-        // JWT
-        http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        // JWT imediatamente antes da autorização para o contexto não ser limpo por filtros intermediários
+        http.addFilterBefore(jwtAuthFilter, AuthorizationFilter.class);
 
         // H2 console
         http.headers(headers -> headers.frameOptions(frame -> frame.disable()));

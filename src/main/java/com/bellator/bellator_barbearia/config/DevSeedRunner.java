@@ -6,12 +6,14 @@ import com.bellator.bellator_barbearia.model.Usuarios;
 import com.bellator.bellator_barbearia.repository.ServicoRepository;
 import com.bellator.bellator_barbearia.repository.UsuarioRepository;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+/**
+ * Carga inicial idempotente (só insere se ainda não existir).
+ * Sem perfil {@code dev} o seed não rodava e a lista de serviços vinha vazia.
+ */
 @Component
-@Profile("dev")
 public class DevSeedRunner implements CommandLineRunner {
 
     private final UsuarioRepository usuarioRepo;

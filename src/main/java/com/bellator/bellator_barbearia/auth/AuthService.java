@@ -30,7 +30,7 @@ public class AuthService {
     }
 
     public AuthResponse register(AuthRegisterRequest req) {
-        if (usuarioRepo.existsByEmail(req.email)) {
+        if (usuarioRepo.existsByEmail(req.email.toLowerCase())) {
             throw new ApiException(HttpStatus.CONFLICT, "Email já cadastrado");
         }
         Usuarios u = new Usuarios();

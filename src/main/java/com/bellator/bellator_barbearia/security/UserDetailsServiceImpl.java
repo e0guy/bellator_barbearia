@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuarios u = repo.findByEmail(username)
+        Usuarios u = repo.findByEmailIgnoreCase(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
         return new User(u.getEmail(), u.getSenhaHash(),
                 List.of(new SimpleGrantedAuthority("ROLE_" + u.getRole().name())));

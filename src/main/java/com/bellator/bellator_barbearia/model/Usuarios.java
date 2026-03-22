@@ -1,6 +1,7 @@
 package com.bellator.bellator_barbearia.model;
 
 import com.bellator.bellator_barbearia.role.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,6 +21,8 @@ public class Usuarios {
     @Column(unique = true)
     private String email;
     private String telefone;
+
+    @JsonIgnore
     private String senhaHash;
 
     @Enumerated(EnumType.STRING)

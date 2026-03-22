@@ -9,10 +9,7 @@ export function BarberPanelPage(ctx) {
     el("p", { class: "sub reveal" }, "Visualize os agendamentos e marque como concluído.")
   );
 
-  const db = api.ensureDB();
-  const services = Object.fromEntries(db.services.map((s) => [s.id, s]));
-
-  const user = ctx?.user || api.getCurrentUser?.() || {};
+  const user = ctx?.user || {};
   const list = el("div", { class: "section" });
   wrap.append(list);
 
@@ -44,7 +41,6 @@ export function BarberPanelPage(ctx) {
     }
 
     for (const a of todays) {
-      const s = services[a.servicoId];
       const cNome = a.clienteNome || "Cliente";
 
       const card = el("div", { class: "card reveal" });
@@ -55,7 +51,7 @@ export function BarberPanelPage(ctx) {
             el(
               "div",
               { class: "card__title" },
-              `${s?.nome || "Serviço"} • ${fmtDateTime(a.dataHora)}`
+              `${a.servicoNome || "Serviço"} • ${fmtDateTime(a.dataHora)}`
             ),
             el(
               "div",
