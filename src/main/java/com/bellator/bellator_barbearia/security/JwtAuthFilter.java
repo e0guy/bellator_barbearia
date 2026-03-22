@@ -29,6 +29,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
 
+        String path = request.getRequestURI();
+        // Libera todos os arquivos estáticos comuns e tudo dentro de /static/
+        if (path.matches(".*(\\.js|\\.css|\\.png|\\.jpg|\\.jpeg|\\.ico|\\.svg|\\.woff2?|\\.ttf|\\.eot)$") ||
+            path.startsWith("/js/") || path.startsWith("/css/") || path.startsWith("/images/") || path.startsWith("/assets/") || path.startsWith("/static/")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         final String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {

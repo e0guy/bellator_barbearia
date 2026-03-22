@@ -1,5 +1,4 @@
-import { buildCalendar } from "../calendar.js";
-
+import { el } from "/js/ui.js";
 const DOW = ["D","S","T","Q","Q","S","S"]; // dom..sab
 
 export function Calendar({value, onChange, minDate=new Date(), disabledDates=[]}){

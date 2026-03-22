@@ -26,32 +26,36 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+
         http
-                .csrf(csrf -> csrf.disable())
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                // 🔓 LIBERA FRONT (ESSENCIAL)
+                .requestMatchers(
+                    "/",
+                    "/health",
+                    "/images/**",
+                    "/css/**",
+                    "/app",
+                    "/index.html",
+                    "/styles.css",
+                    "/favicon.ico",
+                    "/assets/**",
+                    "/js/**",
+                    "/static/**",
+                    "/resources/**",
+                    "/calendar.js"
+                ).permitAll()
 
-                .authorizeHttpRequests(auth -> auth
-                        // 🔓 LIBERA FRONT (ESSENCIAL)
-                        .requestMatchers(
-                                "/",
-                                "/health",
-                                "/app",
-                                "/index.html",
-                                "/styles.css",
-                                "/favicon.ico",
-                                "/assets/**",
-                                "/js/**"
-                        ).permitAll()
+                // 🔓 LIBERA LOGIN / H2
+                .requestMatchers("/auth/**", "/h2-console/**").permitAll()
 
-                        // 🔓 LIBERA LOGIN / H2
-                        .requestMatchers("/auth/**", "/h2-console/**").permitAll()
-
-                        // 🔒 RESTO PROTEGIDO
-                        .anyRequest().authenticated()
-                )
-
-                .sessionManagement(session ->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
+                // 🔒 RESTO PROTEGIDO
+                .anyRequest().authenticated()
+            )
+            .sessionManagement(session ->
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            );
 
         // JWT
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

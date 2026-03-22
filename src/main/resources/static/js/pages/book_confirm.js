@@ -1,6 +1,5 @@
 import * as api from "../api.js";
 import { el, toast } from "../ui.js";
-import { buildCalendar } from "../calendar.js";
 
 export function BookConfirmPage(ctx){
   const { user } = ctx;
@@ -90,4 +89,25 @@ function kv(icon, label, left, right){
 function mapIcon(name){
   const m = {scissors:"scissors",user:"user",calendar:"calendar",clock:"clock",star:"star",pin:"map-pin",check:"check"};
   return m[name] || name || "circle";
+}
+
+function money(valor) {
+  return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+function fmtDate(iso) {
+  const d = new Date(iso);
+  return d.toLocaleDateString('pt-BR');
+}
+
+function fmtTime(iso) {
+  const d = new Date(iso);
+  return d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+}
+
+function mountReveal(wrap) {
+  // Simplesmente revela os elementos com a classe 'reveal' (pode ser melhorado conforme sua lógica de animação)
+  setTimeout(() => {
+    wrap.querySelectorAll('.reveal').forEach(el => el.classList.add('revealed'));
+  }, 10);
 }

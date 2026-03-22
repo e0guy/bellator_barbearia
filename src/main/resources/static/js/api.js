@@ -47,6 +47,14 @@ export function logout() {
   localStorage.removeItem("token");
 }
 
+export function me() {
+  const token = getToken();
+  if (!token) return null;
+  // Aqui você pode decodificar o token JWT se quiser obter dados do usuário
+  // ou buscar do localStorage se você salva o usuário lá após login
+  return { token };
+}
+
 // ================= SERVICES =================
 export function listServices() {
   return request("/servicos");

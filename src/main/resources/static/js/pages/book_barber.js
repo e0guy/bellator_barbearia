@@ -23,15 +23,10 @@ export function BookBarberPage(ctx){
   function render(){
     list.innerHTML = "";
     for(const b of barbers){
-      const card = el("button",{class:`card reveal ${selected?.id===b.id ? "card--selected":""}`, type:"button", style:"text-align:left; width:100%; cursor:pointer"});
+      const card = el("button",{class:`card reveal ${selected?.id===b.id ? "card--selected": ""}`, type:"button", style:"text-align:left; width:100%; cursor:pointer"});
       card.append(
-        el("div",{class:"card__row"}, [
-          el("div",{}, [
-            el("div",{class:"card__title"}, b.nome),
-            el("div",{class:"card__desc"}, `${b.especialidade || "Barbeiro"} • ⭐ ${b.avaliacao || "4.8"}`)
-          ]),
-          el("span",{class:"badge"}, "Disponível")
-        ])
+        BarberCard(b),
+        el("span",{class:"badge"}, "Disponível")
       );
       card.addEventListener("click", ()=>{ selected = b; render(); });
       list.append(card);
