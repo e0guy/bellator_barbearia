@@ -38,7 +38,7 @@ public class AuthService {
         u.setEmail(req.email.toLowerCase());
         u.setTelefone(req.telefone);
         u.setSenhaHash(encoder.encode(req.senha));
-        u.setRole(req.role != null ? req.role : com.bellator.bellator_barbearia.role.Role.CLIENTE); // valor padrão para role
+        u.setRole(com.bellator.bellator_barbearia.role.Role.CLIENTE); // Força cadastros públicos a serem sempre CLIENTE
         u = usuarioRepo.save(u);
 
         String token = jwtService.generate(u.getEmail(), Map.of(
@@ -47,6 +47,19 @@ public class AuthService {
         ));
 
         return new AuthResponse(token, u.getRole(), new UsuarioResponse(u.getId(), u.getNome(), u.getEmail(),u.getTelefone(), u.getRole()));
+    }
+
+    public Usuarios cadastrarBarbeiroDireto(AuthRegisterRequest req) {
+        if (usuarioRepo.existsByEmail(req.email.toLowerCase())) {
+            throw new ApiException(HttpStatus.CONFLICT, "Email já cadastrado");
+        }
+        Usuarios u = new Usuarios();
+        u.setNome(req.nome);
+        u.setEmail(req.email.toLowerCase());
+        u.setTelefone(req.telefone);
+        u.setSenhaHash(encoder.encode(req.senha));
+        u.setRole(com.bellator.bellator_barbearia.role.Role.BARBEIRO);
+        return usuarioRepo.save(u);
     }
 
     public AuthResponse login(AuthRequest req) {

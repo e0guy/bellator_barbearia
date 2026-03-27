@@ -26,7 +26,52 @@ export function AdminPage(ctx){
     ])
   );
 
-  wrap.append(el("div",{class:"section"}, [card]));
+  const barberSection = el("div", { class: "section reveal" }, [
+    el("h2", { class: "h2", style: "margin-top:2rem;" }, "Gestão de Equipe"),
+    el("p", { class: "sub", style: "margin-bottom:1rem;" }, "Cadastrar um novo barbeiro.")
+  ]);
+
+  const inpName = el("input", { type: "text", class: "input", placeholder: "Nome do Barbeiro" });
+  const inpEmail = el("input", { type: "email", class: "input", placeholder: "E-mail de acesso" });
+  const inpPhone = el("input", { type: "text", class: "input", placeholder: "WhastApp/Telefone" });
+  const inpPass = el("input", { type: "password", class: "input", placeholder: "Senha provisória" });
+  const btnCadastrar = el("button", { class: "btn" }, "Cadastrar Profissional");
+
+  btnCadastrar.onclick = async () => {
+    const nome = inpName.value.trim();
+    const email = inpEmail.value.trim();
+    const telefone = inpPhone.value.trim();
+    const senha = inpPass.value.trim();
+    if (!nome || !email || !senha) {
+      alert("Preencha os campos obrigatórios.");
+      return;
+    }
+    btnCadastrar.disabled = true;
+    btnCadastrar.textContent = "Aguarde...";
+    try {
+      await api.registerBarber({ nome, email, telefone, senha });
+      alert("Barbeiro cadastrado com sucesso no sistema!");
+      inpName.value = "";
+      inpEmail.value = "";
+      inpPhone.value = "";
+      inpPass.value = "";
+    } catch (e) {
+      alert("Erro ao cadastrar: " + e.message);
+    } finally {
+      btnCadastrar.disabled = false;
+      btnCadastrar.textContent = "Cadastrar Profissional";
+    }
+  };
+
+  const formCard = el("div", { class: "card", style: "display:flex; flex-direction:column; gap:16px;" }, [
+    inpName, inpEmail, inpPhone, inpPass, btnCadastrar
+  ]);
+  barberSection.append(formCard);
+
+  wrap.append(
+    el("div",{class:"section"}, [card]),
+    barberSection
+  );
 
   // Atualiza via API
   (async ()=>{

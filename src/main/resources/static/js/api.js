@@ -26,8 +26,16 @@ async function request(url, options = {}) {
   });
 
   if (!res.ok) {
+    const status = res.status;
     const text = await res.text();
-    throw new Error(text);
+    if (status === 401 || (status === 403 && token)) {
+       // Token inválido ou BD resetado (H2 em memória)
+       localStorage.removeItem("token");
+       localStorage.removeItem("user");
+       window.location.hash = "#/home"; // Redireciona
+       window.location.reload(); 
+    }
+    throw new Error(text || "Erro na requisição. Status: " + status);
   }
 
   return res.json();
@@ -91,13 +99,17 @@ export function me() {
 }
 
 // ================= SERVICES =================
-export function listServices() {
-  return request("/servicos");
+export async function listServices() {
+  const data = await request("/servicos");
+  if (__catalog) __catalog.services = (Array.isArray(data) ? data : []).map(normalizeCatalogService);
+  return data;
 }
 
 // ================= BARBEIROS =================
-export function listBarbers() {
-  return request("/usuarios/barbeiros");
+export async function listBarbers() {
+  const data = await request("/usuarios/barbeiros");
+  if (__catalog) __catalog.barbers = (Array.isArray(data) ? data : []).map(normalizeCatalogBarber);
+  return data;
 }
 
 // ================= CATÁLOGO (serviços / barbeiros para o fluxo de agendamento) =================
@@ -235,4 +247,31 @@ export function cancelAppointment(id) {
   return request(`/agendamentos/${id}/cancelar`, {
     method: "PUT"
   });
+}
+
+// ================= ADMIN =================
+let __adminReport = { total: 0, concluidos: 0 };
+
+export async function refreshAdminReport() {
+  try {
+    __adminReport = await request("/admin/relatorio");
+  } catch(e) {
+    console.error(e);
+  }
+}
+
+export function adminReport() {
+  return {
+    total: __adminReport.faturamento || 0,
+    doneCount: __adminReport.concluidos || 0
+  };
+}
+
+export async function registerBarber(data) {
+  const res = await request("/admin/barbeiros", {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+  await bootstrap(); // Atualiza o catálogo para incluir o novo barbeiro
+  return res;
 }

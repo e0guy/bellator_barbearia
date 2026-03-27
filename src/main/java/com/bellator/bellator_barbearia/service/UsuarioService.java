@@ -29,4 +29,10 @@ public class UsuarioService {
     public List<Usuarios> listarBarbeiros() {
         return repo.findByRole(Role.BARBEIRO);
     }
+
+    public Usuarios alterarRoleUsuario(Long id, Role novaRole) {
+        Usuarios usuario = byId(id);
+        usuario.setRole(novaRole);
+        return repo.save(usuario);
+    }
 }
