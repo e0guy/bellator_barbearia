@@ -8,6 +8,8 @@ import { BookDateTimePage } from "./pages/book_datetime.js";
 import { BookConfirmPage } from "./pages/book_confirm.js";
 import { BarberPanelPage } from "./pages/barber.js";
 import { AdminPage } from "./pages/admin.js";
+import { TermsPage } from "./pages/terms.js";
+import { PrivacyPage } from "./pages/privacy.js";
 
 export const routes = {
   "/auth": { page: AuthPage, public:true, nav:false },
@@ -22,4 +24,7 @@ export const routes = {
 
   "/barber": { page: BarberPanelPage, nav:false, role:"barbeiro" },
   "/admin": { page: AdminPage, nav:false, role:"admin" },
+  
+  "/terms": { page: TermsPage, public:true, nav:false },
+  "/privacy": { page: PrivacyPage, public:true, nav:false },
 };

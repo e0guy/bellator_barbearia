@@ -24,7 +24,6 @@ export function AuthPage(){
     card.append(
       el("div", {class:"field"}, [el("div",{class:"label"},"E-mail"), email]),
       el("div", {class:"field"}, [el("div",{class:"label"},"Senha"), pass]),
-      el("div", {class:"helper"}, "Dica: contas demo → cliente@bellator.com / 123456 • admin@bellator.com / 123456 • carlos@bellator.com / 123456"),
       el("div", {class:"hr"}),
       el("button", {class:"btn btn--primary", type:"button", onClick: async ()=>{
         try{
@@ -46,7 +45,8 @@ export function AuthPage(){
     const pass = el("input", {class:"input", type:"password", placeholder:"Crie uma senha", autocomplete:"new-password"});
     const terms = el("label", {class:"helper"}, [
       el("input", {type:"checkbox"}), " Ao se cadastrar, você concorda com nossos ",
-      el("strong", {}, "Termos de uso"), " e ", el("strong", {}, "Política de privacidade"), "."
+      el("a", {href:"#/terms", target:"_blank", style:"text-decoration: underline; color: var(--primary);"}, "Termos de uso"), " e ", 
+      el("a", {href:"#/privacy", target:"_blank", style:"text-decoration: underline; color: var(--primary);"}, "Política de privacidade"), "."
     ]);
 
     card.append(
